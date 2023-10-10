@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://oy5g01gfeuoh"]
+
+[ext_resource type="Texture2D" uid="uid://b0id0chvxbqct" path="res://icon.svg" id="1_67aea"]
+[ext_resource type="PackedScene" uid="uid://cvwg8n2ppumll" path="res://robot/robot.tscn" id="1_xgltm"]
+
+[node name="Scene" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Player"]]
+modulate = Color(1, 0.415686, 1, 1)
+position = Vector2(861, 455)
+texture = ExtResource("1_67aea")
+
+[node name="Robot" parent="." instance=ExtResource("1_xgltm")]

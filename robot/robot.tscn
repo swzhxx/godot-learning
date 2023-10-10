@@ -1,0 +1,106 @@
+[gd_scene load_steps=15 format=3 uid="uid://cvwg8n2ppumll"]
+
+[ext_resource type="Texture2D" uid="uid://b0id0chvxbqct" path="res://icon.svg" id="1_4svuo"]
+[ext_resource type="Script" path="res://robot/robot.gd" id="2_5afef"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="3_7eo8f"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector_random.gd" id="4_n50x8"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="4_pvndm"]
+[ext_resource type="Script" path="res://addons/beehave/blackboard.gd" id="5_cogqx"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="7_arbba"]
+[ext_resource type="Script" path="res://robot/escape.gd" id="7_n1y2x"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/leaves/blackboard_compare.gd" id="8_3bx66"]
+[ext_resource type="Script" path="res://robot/thinking.gd" id="8_ce5nj"]
+[ext_resource type="Script" path="res://robot/round.gd" id="8_clp4s"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="9_io67k"]
+[ext_resource type="Script" path="res://robot/robot-round-behavior.gd" id="11_r5n0d"]
+
+[sub_resource type="GDScript" id="GDScript_14j65"]
+script/source = "class_name RotbotAttack extends ActionLeaf
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func tick(actor:Node , blackboard:Blackboard ) -> int:
+	self.name = 'RobotAttack(Running)'		
+	return RUNNING
+
+func after_run(actor:Node ,blackboard:Blackboard) -> void : 
+	self.name = 'RobotAttack'
+"
+
+[node name="Robot" type="Sprite2D"]
+position = Vector2(250, 204)
+texture = ExtResource("1_4svuo")
+script = ExtResource("2_5afef")
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard")]
+script = ExtResource("3_7eo8f")
+actor_node_path = NodePath("..")
+blackboard = NodePath("../Blackboard")
+
+[node name="SelectorRandomComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("4_n50x8")
+
+[node name="InverterDecorator" type="Node" parent="BeehaveTree/SelectorRandomComposite"]
+script = ExtResource("9_io67k")
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorRandomComposite/InverterDecorator"]
+script = ExtResource("7_arbba")
+wait_time = 2.0
+
+[node name="RotbotAttack" type="Node" parent="BeehaveTree/SelectorRandomComposite/InverterDecorator/TimeLimiterDecorator"]
+script = SubResource("GDScript_14j65")
+
+[node name="SequenceComposite2" type="Node" parent="BeehaveTree/SelectorRandomComposite"]
+script = ExtResource("4_pvndm")
+
+[node name="BlackboardCompareCondition" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite2"]
+script = ExtResource("8_3bx66")
+left_operand = "get_value(\"health\")"
+operator = 3
+right_operand = "110"
+
+[node name="InverterDecorator2" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite2"]
+script = ExtResource("9_io67k")
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite2/InverterDecorator2"]
+script = ExtResource("7_arbba")
+wait_time = 0.745
+
+[node name="RobotEscape" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite2/InverterDecorator2/TimeLimiterDecorator"]
+script = ExtResource("7_n1y2x")
+
+[node name="SequenceComposite" type="Node" parent="BeehaveTree/SelectorRandomComposite"]
+script = ExtResource("4_pvndm")
+
+[node name="InverterDecorator" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite"]
+script = ExtResource("9_io67k")
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite/InverterDecorator"]
+script = ExtResource("7_arbba")
+wait_time = 1.015
+
+[node name="RobotThinking" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite/InverterDecorator/TimeLimiterDecorator"]
+script = ExtResource("8_ce5nj")
+
+[node name="RobotRound" type="Node" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite"]
+script = ExtResource("8_clp4s")
+round_time_duration = 3.85
+behavior = ExtResource("11_r5n0d")
+
+[node name="RoundTimer" type="Timer" parent="BeehaveTree/SelectorRandomComposite/SequenceComposite/RobotRound"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Blackboard" type="Node" parent="."]
+script = ExtResource("5_cogqx")
+
+[connection signal="timeout" from="BeehaveTree/SelectorRandomComposite/SequenceComposite/RobotRound/RoundTimer" to="BeehaveTree/SelectorRandomComposite/SequenceComposite/RobotRound" method="_on_round_timer_timeout"]
