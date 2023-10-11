@@ -1,4 +1,4 @@
-class_name RobotEscape extends BehaviorActionLeaf
+class_name RobotDetahBehavior extends Behavior
 
 
 # Called when the node enters the scene tree for the first time.
@@ -8,10 +8,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-func tick(actor:Node , blackboard:Blackboard ) -> int:
-	return RUNNING
-
-func after_run(actor:Node ,blackboard:Blackboard) -> void : 
-	pass
+	print("self death death")
+	self.actor.scale *= 0.75
+func _exit_tree():
+	self.actor.queue_free()

@@ -1,4 +1,4 @@
-class_name RobotEscape extends BehaviorActionLeaf
+class_name RobotDetah extends BehaviorActionLeaf
 
 
 # Called when the node enters the scene tree for the first time.
@@ -10,8 +10,5 @@ func _ready():
 func _process(delta):
 	pass
 
-func tick(actor:Node , blackboard:Blackboard ) -> int:
+func tick(actor:Node,blackboard:Blackboard )-> int:
 	return RUNNING
-
-func after_run(actor:Node ,blackboard:Blackboard) -> void : 
-	pass

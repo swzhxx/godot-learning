@@ -1,6 +1,6 @@
 class_name Behavior extends Node
 
-var actor:Node 
+var actor:Robot 
 var blackboard:Blackboard
 
 # Called when the node enters the scene tree for the first time.

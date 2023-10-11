@@ -1,4 +1,4 @@
-class_name RobotEscape extends BehaviorActionLeaf
+class_name RotbotEscapeBehavior extends Behavior
 
 
 # Called when the node enters the scene tree for the first time.
@@ -8,10 +8,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-func tick(actor:Node , blackboard:Blackboard ) -> int:
-	return RUNNING
-
-func after_run(actor:Node ,blackboard:Blackboard) -> void : 
-	pass
+	# 逃跑的时候需要反向
+	var direction = self.actor.get_player_direction()
+	direction *= -1
+	self.actor.position += self.actor.speed * delta * direction	
+	
