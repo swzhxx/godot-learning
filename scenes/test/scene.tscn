@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://oy5g01gfeuoh"]
+
+[ext_resource type="Script" path="res://scenes/test/scene.gd" id="1_pi4eg"]
+[ext_resource type="Texture2D" uid="uid://b0id0chvxbqct" path="res://icon.svg" id="2_l4xh6"]
+[ext_resource type="PackedScene" uid="uid://cvwg8n2ppumll" path="res://robot/robot.tscn" id="3_74h6l"]
+[ext_resource type="PackedScene" uid="uid://bkufep2nid73v" path="res://scripts/Elf_F.tscn" id="4_nipa2"]
+
+[node name="Scene" type="Node2D"]
+script = ExtResource("1_pi4eg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Player"]]
+modulate = Color(1, 0.415686, 1, 1)
+position = Vector2(861, 455)
+texture = ExtResource("2_l4xh6")
+
+[node name="Robot" parent="." instance=ExtResource("3_74h6l")]
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Elf_F" parent="." instance=ExtResource("4_nipa2")]
+position = Vector2(41, 64)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
