@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo4h4idmebw33"]
+
+[ext_resource type="PackedScene" uid="uid://cwi3jsvxcg7ly" path="res://scripts/player/player.tscn" id="1_d8rb4"]
+[ext_resource type="Script" path="res://scenes/ui_interface.gd" id="2_8ywn6"]
+[ext_resource type="PackedScene" uid="uid://d1kih1jk28exu" path="res://scripts/bag/bag.tscn" id="3_15n0r"]
+[ext_resource type="PackedScene" uid="uid://csosolrksmg1v" path="res://scripts/bag/slot.tscn" id="4_yhakq"]
+
+[node name="BagScene" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_d8rb4")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ui_interface" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_8ywn6")
+
+[node name="bag" parent="CanvasLayer/ui_interface" instance=ExtResource("3_15n0r")]
+layout_mode = 1
+
+[node name="grabbed_slot" parent="CanvasLayer/ui_interface" instance=ExtResource("4_yhakq")]
+visible = false

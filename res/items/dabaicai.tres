@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://fxag1hmjkcss"]
+
+[ext_resource type="Script" path="res://scripts/inventory/item_data.gd" id="1_wygdf"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_82unm"]
+load_path = "res://.godot/imported/0x72_DungeonTilesetII_v1.6.png-48ffafcf2129e905a79864b1193e1438.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmf85"]
+atlas = SubResource("CompressedTexture2D_82unm")
+region = Rect2(304, 336, 16, 16)
+
+[resource]
+script = ExtResource("1_wygdf")
+item_name = "大白菜"
+stackable = true
+item_texture = SubResource("AtlasTexture_fmf85")
+description = "我是一个大白菜"

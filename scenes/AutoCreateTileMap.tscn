@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://buqlbl2cirn7c"]
+
+[ext_resource type="Script" path="res://scenes/AutoCreateTileMap.gd" id="1_dg6sw"]
+[ext_resource type="PackedScene" uid="uid://pyim42pnvcf0" path="res://scenes/TileMap.tscn" id="2_rp4vo"]
+
+[node name="AutoCreateTileMap" type="Node2D"]
+script = ExtResource("1_dg6sw")
+
+[node name="TileMap" parent="." instance=ExtResource("2_rp4vo")]
