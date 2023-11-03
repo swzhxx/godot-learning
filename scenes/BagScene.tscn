@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bo4h4idmebw33"]
+[gd_scene load_steps=6 format=3 uid="uid://bo4h4idmebw33"]
 
 [ext_resource type="PackedScene" uid="uid://cwi3jsvxcg7ly" path="res://scripts/player/player.tscn" id="1_d8rb4"]
 [ext_resource type="Script" path="res://scenes/ui_interface.gd" id="2_8ywn6"]
+[ext_resource type="Texture2D" uid="uid://hbvw0ggquxtk" path="res://assets/independ/angel_idle_anim_f0.png" id="2_ab6ct"]
 [ext_resource type="PackedScene" uid="uid://d1kih1jk28exu" path="res://scripts/bag/bag.tscn" id="3_15n0r"]
 [ext_resource type="PackedScene" uid="uid://csosolrksmg1v" path="res://scripts/bag/slot.tscn" id="4_yhakq"]
 
 [node name="BagScene" type="Node2D"]
+position = Vector2(144, 112)
 
 [node name="player" parent="." instance=ExtResource("1_d8rb4")]
+texture = ExtResource("2_ab6ct")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -25,3 +28,5 @@ layout_mode = 1
 
 [node name="grabbed_slot" parent="CanvasLayer/ui_interface" instance=ExtResource("4_yhakq")]
 visible = false
+offset_right = 16.0
+offset_bottom = 16.0
