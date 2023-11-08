@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ntk3gt14nmhs"]
+
+[ext_resource type="Script" path="res://scenes/nav-test/Player.gd" id="1_bx8n8"]
+[ext_resource type="Texture2D" uid="uid://c8dejfpjxxcqc" path="res://assets/rpg-pack/chars/hat-guy/hat-guy.png" id="2_0ex7t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fugbl"]
+size = Vector2(16, 19)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(-1, -11)
+collision_mask = 7
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_bx8n8")
+
+[node name="Graphic" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Graphic"]
+texture = ExtResource("2_0ex7t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_fugbl")

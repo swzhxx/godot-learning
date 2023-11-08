@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwdrr486edc17"]
+
+[ext_resource type="Script" path="res://scenes/nav-test/Enemy.gd" id="1_l3bnc"]
+[ext_resource type="Texture2D" uid="uid://bak3veopansje" path="res://assets/rpg-pack/mobs/slime-blue.png" id="2_6hmg4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1324c"]
+atlas = ExtResource("2_6hmg4")
+region = Rect2(0, 12, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvxlh"]
+atlas = ExtResource("2_6hmg4")
+region = Rect2(16, 12, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cekup"]
+atlas = ExtResource("2_6hmg4")
+region = Rect2(32, 12, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6r7wr"]
+atlas = ExtResource("2_6hmg4")
+region = Rect2(48, 12, 16, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xu0xk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1324c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvxlh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cekup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6r7wr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1gu4m"]
+radius = 6.3514
+
+[node name="Enemy" type="CharacterBody2D"]
+position = Vector2(3, -16)
+collision_layer = 2
+collision_mask = 7
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_l3bnc")
+
+[node name="Graphic" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphic"]
+position = Vector2(-3, 10)
+scale = Vector2(0.9375, 1)
+sprite_frames = SubResource("SpriteFrames_xu0xk")
+frame_progress = 0.889016
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 9)
+scale = Vector2(1, 0.960001)
+shape = SubResource("CircleShape2D_1gu4m")
+
+[node name="Navigation" type="Node2D" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Navigation"]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="Navigation"]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Navigation/Timer" to="." method="_on_timer_timeout"]
